@@ -6,7 +6,7 @@
 #include "stdio.h"
 #include "string.h"
 
-#pragma pack (push, 1)
+#pragma pack(push, 1)
 typedef struct BMPHeader {
     char ID[2];
     uint32_t file_size;
@@ -35,7 +35,7 @@ typedef struct BMPFile {
 } BMPFile;
 #pragma pack(pop)
 
-void makeBMP(FILE* file, BMPFile* bmpf, int** gris);
+void makeBMP(char* path, BMPFile* bmp_file, int gris[][bmp_file->dhdr.width]);
 BMPFile* loadBMP(char* filename);
 void freeBMP(BMPFile* bmp_file);
 
