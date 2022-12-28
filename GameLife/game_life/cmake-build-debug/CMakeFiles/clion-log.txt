@@ -1,4 +1,0 @@
-"E:\Programms\CLion 2022.2.1\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=E:/Programms/CLion 2022.2.1/bin/ninja/win/ninja.exe" -G Ninja -S "E:\University_projects\Conway's Game Life" -B "E:\University_projects\Conway's Game Life\cmake-build-debug"
--- Configuring done
--- Generating done
--- Build files have been written to: E:/University_projects/Conway's Game Life/cmake-build-debug

@@ -1,3 +1,0 @@
-E:/University_projects/Conway's Game Life/cmake-build-debug/CMakeFiles/Conway_s_Game_Life.dir
-E:/University_projects/Conway's Game Life/cmake-build-debug/CMakeFiles/edit_cache.dir
-E:/University_projects/Conway's Game Life/cmake-build-debug/CMakeFiles/rebuild_cache.dir
