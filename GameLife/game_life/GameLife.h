@@ -2,6 +2,7 @@
 #define CONWAY_S_GAME_LIFE_GAMELIFE_H
 
 #include "BMP.h"
+#include "windows.h"
 
 void GameLife(char* input_filename, char* output_filename, char* directory);
 int GameIteration(int ROWS, int COLS, int** gris_after, int** gris_before);

@@ -6,7 +6,7 @@
 # It is included in the main 'build.ninja'.
 
 # =============================================================================
-# Project: game_life
+# Project: Conway_s_Game_Life
 # Configurations: Debug
 # =============================================================================
 # =============================================================================
@@ -14,7 +14,7 @@
 #############################################
 # Rule for compiling C files.
 
-rule C_COMPILER__game_life_Debug
+rule C_COMPILER__Conway_s_Game_Life_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = "E:\Programms\CLion 2022.2.1\bin\mingw\bin\gcc.exe" $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
@@ -24,7 +24,7 @@ rule C_COMPILER__game_life_Debug
 #############################################
 # Rule for linking C executable.
 
-rule C_EXECUTABLE_LINKER__game_life_Debug
+rule C_EXECUTABLE_LINKER__Conway_s_Game_Life_Debug
   command = cmd.exe /C "$PRE_LINK && "E:\Programms\CLion 2022.2.1\bin\mingw\bin\gcc.exe" $FLAGS $LINK_FLAGS $in -o $TARGET_FILE -Wl,--out-implib,$TARGET_IMPLIB -Wl,--major-image-version,0,--minor-image-version,0 $LINK_PATH $LINK_LIBRARIES && $POST_BUILD"
   description = Linking C executable $TARGET_FILE
   restat = $RESTAT
@@ -42,7 +42,7 @@ rule CUSTOM_COMMAND
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = "E:\Programms\CLion 2022.2.1\bin\cmake\win\bin\cmake.exe" --regenerate-during-build -SE:\University_projects\game_life -BE:\University_projects\game_life\cmake-build-debug
+  command = "E:\Programms\CLion 2022.2.1\bin\cmake\win\bin\cmake.exe" --regenerate-during-build -S"E:\University_projects\Conway's Game Life" -B"E:\University_projects\Conway's Game Life\cmake-build-debug"
   description = Re-running CMake...
   generator = 1
 

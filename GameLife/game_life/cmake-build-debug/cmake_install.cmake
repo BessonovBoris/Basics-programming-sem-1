@@ -1,8 +1,8 @@
-# Install script for directory: E:/University_projects/game_life
+# Install script for directory: E:/University_projects/Conway's Game Life
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/game_life")
+  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/Conway_s_Game_Life")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "E:/University_projects/game_life/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "E:/University_projects/Conway's Game Life/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
