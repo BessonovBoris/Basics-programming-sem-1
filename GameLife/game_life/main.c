@@ -3,10 +3,10 @@
 int string_to_int(char* string);
 
 int main(int argc, char* argv[]) {
-    char input_filename[100] = "ex40.bmp";
+    char input_filename[100] = "ex39.bmp";
     char output_filename[100] = "generation_";
     char directory[100] = "generations/";
-    int generations_count = 3;
+    int generations_count = 20;
 
     for(int i = 0; i < argc; i++) {
         if(!strcmp(argv[i], "-input")) {
