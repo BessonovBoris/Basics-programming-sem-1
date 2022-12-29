@@ -98,6 +98,9 @@ void delete_elements(int ROWS, int COLS, int gen_after[][COLS], int gen_before[]
 }
 
 void initialization(BMPFile* bmp, int ROWS, int COLS, int gen_before[][COLS]) {
+    int padding = (int)(bmp->dhdr.data_size/bmp->dhdr.height);
+    padding = padding % (int)(3*bmp->dhdr.width);
+
     for(int i = 0; i < ROWS; i++) {
         for(int j = 0; j < COLS; j++) {
             gen_before[i][j] = 0;
@@ -118,7 +121,7 @@ void initialization(BMPFile* bmp, int ROWS, int COLS, int gen_before[][COLS]) {
         if(c == bmp->dhdr.width) {
             c = 0;
             r--;
-            n += 2;
+            n += padding;
         }
     }
 }
