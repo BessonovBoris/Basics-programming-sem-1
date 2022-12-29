@@ -10,7 +10,8 @@
 typedef struct BMPHeader {
     char ID[2];
     uint32_t file_size;
-    char unused[4];
+    char unused1[2];
+    char unused2[2];
     uint32_t offset;
 } BMPHeader;
 
@@ -35,7 +36,7 @@ typedef struct BMPFile {
 } BMPFile;
 #pragma pack(pop)
 
-void makeBMP(char* path, BMPFile* bmp_file, int gris[][bmp_file->dhdr.width]);
+void makeBMP(char* path, BMPFile* bmp_file, int generation[][bmp_file->dhdr.width]);
 BMPFile* loadBMP(char* filename);
 void freeBMP(BMPFile* bmp_file);
 

@@ -9,8 +9,9 @@ void GameLife(char* input_filename, char* output_filename, char* directory, int 
     int ROWS = (int)bmp->dhdr.height;
     int COLS = (int)bmp->dhdr.width;
 
-    int gris_before[ROWS][COLS];
-    int gris_after[ROWS][COLS];
+    printf("ROWS = %d | COLS = %d | DATA_SIZE = %d | FILE_SIZE = %d\n", ROWS, COLS, bmp->dhdr.data_size, bmp->dhdr.size);
+    int gen_before[ROWS][COLS];
+    int gen_after[ROWS][COLS];
 
     int iteration = 0;
     int game_is_changed;
@@ -20,17 +21,19 @@ void GameLife(char* input_filename, char* output_filename, char* directory, int 
 
     printf("Variables initialized\n");
 
-    initialization(bmp, ROWS, COLS, gris_before);
+    initialization(bmp, ROWS, COLS, gen_before);
 
     printf("Initialization completed\n");
 
-//    draw(ROWS, COLS, gris_before);
+//    draw(ROWS, COLS, gen_before);
 //    print_pixels(bmp);
 
     while(iteration != generations_count) {
-        game_is_changed = GameIteration(ROWS, COLS, gris_after, gris_before);
         iteration++;
-//        draw(ROWS, COLS, gris_before);
+        printf("Calculating generation: %d\r", iteration);
+
+        game_is_changed = GameIteration(ROWS, COLS, gen_after, gen_before);
+//        draw(ROWS, COLS, gen_before);
 
         if(game_is_changed == 0)
             break;
@@ -42,64 +45,62 @@ void GameLife(char* input_filename, char* output_filename, char* directory, int 
         strcpy(path, directory);
         strcat(path, bmp_filename);
 
-        makeBMP(path, bmp, gris_before);
+        makeBMP(path, bmp, gen_before);
     }
-
-//    printf("SIZE = %d\n", bmp->dhdr.data_size);
 
     freeBMP(bmp);
 
-    printf("Program finished\n");
+    printf("\nProgram finished\n");
 }
 
-int GameIteration(int ROWS, int COLS, int gris_after[][COLS], int gris_before[][COLS]) {
+int GameIteration(int ROWS, int COLS, int gen_after[][COLS], int gen_before[][COLS]) {
     for(int i = 0; i < ROWS; i++) {
         for(int j = 0; j < COLS; j++)
-            gris_after[i][j] = gris_before[i][j];
+            gen_after[i][j] = gen_before[i][j];
     }
 
-    delete_elements(ROWS, COLS, gris_after, gris_before);
+    delete_elements(ROWS, COLS, gen_after, gen_before);
 
     for(int i = 0; i < ROWS; i++) {
         for (int j = 0; j < COLS; j++) {
-            add_elements(i, j, ROWS, COLS, gris_after, gris_before);
+            add_elements(i, j, ROWS, COLS, gen_after, gen_before);
         }
     }
 
     int similar = 0;
     for(int i = 0; i < ROWS; i++) {
         for(int j = 0; j < COLS; j++) {
-            if(gris_before[i][j] != gris_after[i][j])
+            if(gen_before[i][j] != gen_after[i][j])
                 similar = 1;
-            gris_before[i][j] = gris_after[i][j];
+            gen_before[i][j] = gen_after[i][j];
         }
     }
 
     return similar;
 }
 
-void add_elements(int x, int y, int ROWS, int COLS, int gris_after[][COLS], int gris_before[][COLS]) {
-    int comrades = count_comrades(x, y, ROWS, COLS, gris_before);
+void add_elements(int x, int y, int ROWS, int COLS, int gen_after[][COLS], int gen_before[][COLS]) {
+    int comrades = count_comrades(x, y, ROWS, COLS, gen_before);
 
     if(comrades == 3)
-        gris_after[x][y] = 1;
+        gen_after[x][y] = 1;
 }
 
-void delete_elements(int ROWS, int COLS, int gris_after[][COLS], int gris_before[][COLS]) {
+void delete_elements(int ROWS, int COLS, int gen_after[][COLS], int gen_before[][COLS]) {
     for(int i = 0; i < ROWS; i++) {
         for (int j = 0; j < COLS; j++) {
-            int comrades = count_comrades(i, j, ROWS, COLS, gris_before);
+            int comrades = count_comrades(i, j, ROWS, COLS, gen_before);
 
             if(comrades <= 1 || comrades >= 4)
-                gris_after[i][j] = 0;
+                gen_after[i][j] = 0;
         }
     }
 }
 
-void initialization(BMPFile* bmp, int ROWS, int COLS, int gris_before[][COLS]) {
+void initialization(BMPFile* bmp, int ROWS, int COLS, int gen_before[][COLS]) {
     for(int i = 0; i < ROWS; i++) {
         for(int j = 0; j < COLS; j++) {
-            gris_before[i][j] = 0;
+            gen_before[i][j] = 0;
         }
     }
 
@@ -109,7 +110,7 @@ void initialization(BMPFile* bmp, int ROWS, int COLS, int gris_before[][COLS]) {
 
     while(n < bmp->dhdr.data_size) {
         if(bmp->data[n] == 0)
-            gris_before[r][c] = 1;
+            gen_before[r][c] = 1;
 
         c++;
         n += 3;
@@ -122,33 +123,33 @@ void initialization(BMPFile* bmp, int ROWS, int COLS, int gris_before[][COLS]) {
     }
 }
 
-int count_comrades(int x, int y, int ROWS, int COLS, int gris_before[][COLS]) {
+int count_comrades(int x, int y, int ROWS, int COLS, int gen_before[][COLS]) {
     int comrades = 0;
 
-    if(y >= 1 && gris_before[x][y-1] == 1)
+    if(y >= 1 && gen_before[x][y - 1] == 1)
         comrades++;
-    if(y < COLS-1 && gris_before[x][y+1] == 1)
+    if(y < COLS-1 && gen_before[x][y + 1] == 1)
         comrades++;
-    if(x >= 1 && gris_before[x-1][y] == 1)
+    if(x >= 1 && gen_before[x - 1][y] == 1)
         comrades++;
-    if(x < ROWS-1 && gris_before[x+1][y] == 1)
+    if(x < ROWS-1 && gen_before[x + 1][y] == 1)
         comrades++;
-    if(x < ROWS-1 && y < COLS-1 && gris_before[x+1][y+1] == 1)
+    if(x < ROWS-1 && y < COLS-1 && gen_before[x + 1][y + 1] == 1)
         comrades++;
-    if(x < ROWS-1 && y >= 1 && gris_before[x+1][y-1] == 1)
+    if(x < ROWS-1 && y >= 1 && gen_before[x + 1][y - 1] == 1)
         comrades++;
-    if(x >= 1 && y < COLS-1 && gris_before[x-1][y+1] == 1)
+    if(x >= 1 && y < COLS-1 && gen_before[x - 1][y + 1] == 1)
         comrades++;
-    if(x >= 1 && y >= 1 && gris_before[x-1][y-1] == 1)
+    if(x >= 1 && y >= 1 && gen_before[x - 1][y - 1] == 1)
         comrades++;
 
     return comrades;
 }
 
-void draw(int ROWS, int COLS, int gris[][COLS]) {
+void draw(int ROWS, int COLS, int generation[][COLS]) {
     for(int i = 0; i < ROWS; i++) {
         for(int j = 0; j < COLS; j++) {
-            if(gris[i][j] == 1)
+            if(generation[i][j] == 1)
                 printf("#");
             else
                 printf(".");
@@ -160,12 +161,13 @@ void draw(int ROWS, int COLS, int gris[][COLS]) {
 }
 
 void print_pixels(BMPFile* bmp) {
-    printf("WIDTH = %d | HEIGHT = %d | DATA_SIZE = %d\n\n", bmp->dhdr.width, bmp->dhdr.height, bmp->dhdr.data_size);
+    int padding = bmp->dhdr.data_size/bmp->dhdr.height;
+    padding = padding % (3*bmp->dhdr.width);
 
     for(int i = 0; i < bmp->dhdr.data_size;) {
-        if(i % (3*bmp->dhdr.width + 2) == 0) {
+        if(i % (3*bmp->dhdr.width + padding) == 0) {
             printf("\n");
-            i += 2;
+            i += padding;
         }
 
         printf("%02x ", bmp->data[i]);
