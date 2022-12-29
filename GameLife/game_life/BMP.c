@@ -27,8 +27,8 @@ BMPFile* loadBMP(char* filename) {
 
 void makeBMP(char* path, BMPFile* bmp_file, int generation[][bmp_file->dhdr.width]) {
     FILE* file = fopen(path, "wb");
-    int padding = bmp_file->dhdr.data_size/bmp_file->dhdr.height;
-    padding = padding % (3*bmp_file->dhdr.width);
+    int padding = (int)(bmp_file->dhdr.data_size/bmp_file->dhdr.height);
+    padding = padding % (int)(3*bmp_file->dhdr.width);
 
     if(!file) {
         printf("Can't read %s\n", path);

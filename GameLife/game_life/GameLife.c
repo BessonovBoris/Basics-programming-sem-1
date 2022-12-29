@@ -161,8 +161,8 @@ void draw(int ROWS, int COLS, int generation[][COLS]) {
 }
 
 void print_pixels(BMPFile* bmp) {
-    int padding = bmp->dhdr.data_size/bmp->dhdr.height;
-    padding = padding % (3*bmp->dhdr.width);
+    int padding = (int)(bmp->dhdr.data_size/bmp->dhdr.height);
+    padding = padding % (int)(3*bmp->dhdr.width);
 
     for(int i = 0; i < bmp->dhdr.data_size;) {
         if(i % (3*bmp->dhdr.width + padding) == 0) {
